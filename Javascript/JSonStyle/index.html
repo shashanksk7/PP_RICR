@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container" id="con1">
+      <h2 id="heading">HTML PAGE</h2>
+
+      <div>
+      <p id="content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non rerum nulla
+        voluptatibus accusamus labore adipisci exercitationem est laboriosam
+        consequuntur. Soluta dolores necessitatibus architecto quibusdam eaque
+        tempore eos corporis cupiditate porro.
+      </p>
+    </div>
+    </div>
+
+    <button id="drk" onclick="dark()">Dark Theme</button>
+    <button id="lgt" onclick="light()">Light Theme</button>
+
+    <button id="theme" onclick="changetheme()">Dark theme</button>
+
+    <button id="red" onclick="changeColor('red')">Red</button>
+    <button id="blue" onclick="changeColor('blue')">Blue</button>
+    <button id="green" onclick="changeColor('green')">Green</button>
+    <button id="pink" onclick="changeColor('pink')">Pink</button>
+
+    <input type="color" name="color" id="color" onchange="changeBoxColor(event)" />box
+    <input type="color" name="color" id="color" onchange="changeHeadingColor(event)" />heading
+    <input type="color" name="color" id="color" onchange="changeContentColor(event)" />content
+
+    <script src="script.js"></script>
+  </body>
+</html>

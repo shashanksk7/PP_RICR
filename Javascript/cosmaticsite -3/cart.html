@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Cosmetic Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-800 to-amber-900 min-h-screen flex flex-col items-center">
+    <!-- Discount Banner -->
+    <div class="w-full bg-gradient-to-r from-amber-400 to-purple-700 py-3 overflow-hidden">
+        <div class="slide-animation whitespace-nowrap text-center">
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🎉 Flash Sale! 50% OFF 🎉</span>
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🚚 Free Shipping Over $50 🚚</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-purple-900 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-amber-500 mb-4 md:mb-0 hover:scale-105 transition-transform">
+                <i class="fas fa-spa mr-2"></i>Cosmetic Shop
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <a href="index.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Home</a>
+                <a href="shop.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Shop</a>
+                <a href="cart.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center mt-8 w-full px-4 fade-in">
+        <h1 class="text-amber-100 text-5xl font-bold mb-8 text-center">Your Cart</h1>
+        
+        <div id="cartContainer" class="w-full max-w-4xl bg-purple-100/10 rounded-2xl backdrop-blur-lg p-6">
+            <!-- Cart items will be loaded here -->
+        </div>
+
+        <div class="mt-8 text-center">
+            <h2 class="text-amber-100 text-2xl font-bold mb-4">
+                Total: $<span id="totalPrice">0.00</span>
+            </h2>
+            <button id="checkoutBtn" 
+                    class="px-8 py-3 bg-gradient-to-r from-amber-500 to-purple-600 text-white rounded-lg
+                           font-semibold hover:from-amber-600 hover:to-purple-700 transition-all
+                           transform hover:scale-105">
+                Proceed to Checkout <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-purple-900 shadow-md mt-8">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-amber-100 mb-4 md:mb-0">
+                © 2023 Cosmetic Shop. All rights reserved.
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let container = document.getElementById("cartContainer");
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center p-8">
+                        <p class="text-amber-200 text-xl">Your cart is empty</p>
+                        <a href="shop.html" class="mt-4 inline-block text-amber-400 hover:underline">
+                            Continue Shopping <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>`;
+                document.getElementById("totalPrice").innerText = "0.00";
+                return;
+            }
+
+            container.innerHTML = "";
+            cart.forEach((item, index) => {
+                totalPrice += item.price * item.quantity;
+
+                const cartItem = `
+                    <div class="flex items-center justify-between bg-purple-100/20 rounded-xl p-4 mb-4 backdrop-blur-lg">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-contain rounded-lg">
+                        <div class="flex-1 mx-4">
+                            <h3 class="text-amber-100 font-semibold text-lg">${item.name}</h3>
+                            <p class="text-amber-200">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <button class="removeBtn text-amber-400 hover:text-amber-300 transition-colors" 
+                                data-index="${index}">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>`;
+                container.innerHTML += cartItem;
+            });
+
+            document.getElementById("totalPrice").innerText = totalPrice.toFixed(2);
+
+            document.querySelectorAll(".removeBtn").forEach(button => {
+                button.addEventListener("click", (event) => {
+                    let index = event.target.closest('button').getAttribute("data-index");
+                    cart.splice(index, 1);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    loadCart();
+                });
+            });
+        }
+
+        document.getElementById("checkoutBtn").addEventListener("click", () => {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (cart.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Empty Cart',
+                    text: 'Your cart is empty!',
+                    confirmButtonColor: '#9333ea'
+                });
+                return;
+            }
+            window.location.href = "checkout.html";
+        });
+
+        // Initialize cart on load
+        loadCart();
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

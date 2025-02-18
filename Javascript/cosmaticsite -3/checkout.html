@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cosmetic Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
+</head>
+<body class="bg-gradient-to-r from-pink-400 to-purple-600 min-h-screen flex flex-col items-center">
+    <header class="w-full bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-pink-600">Cosmetic Shop</div>
+            <a href="index.html" class="text-gray-700 hover:text-pink-600">Home</a>
+        </nav>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center mt-8 w-full">
+        <h1 class="text-white text-3xl font-bold">Checkout</h1>
+        <div class="bg-white p-6 rounded-lg shadow-lg mt-6 w-96">
+            <h2 class="text-lg font-bold text-gray-800">Select Payment Method:</h2>
+            
+            <button id="upiPayment" class="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition-all w-full">
+                Pay with UPI
+            </button>
+            
+            <button id="codPayment" class="mt-4 px-6 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all w-full">
+                Cash on Delivery (COD)
+            </button>
+        </div>
+    </main>
+
+    <script>
+        function generateOrderId() {
+            return "ORD" + Math.floor(Math.random() * 100000);
+        }
+
+        function completeOrder(paymentMethod) {
+            const orderId = generateOrderId();
+            let orders = JSON.parse(localStorage.getItem("orders")) || {};
+            orders[orderId] = "Order Placed ✅";
+            localStorage.setItem("orders", JSON.stringify(orders));
+
+            localStorage.setItem("lastOrderId", orderId);
+
+            window.location.href = `order-confirmation.html`;
+        }
+
+        document.getElementById("upiPayment").addEventListener("click", () => {
+            Swal.fire({
+                title: "UPI Payment",
+                text: "Please complete the payment via your UPI app.",
+                icon: "info",
+                confirmButtonText: "Payment Done"
+            }).then(() => {
+                completeOrder("UPI");
+            });
+        });
+
+        document.getElementById("codPayment").addEventListener("click", () => {
+            Swal.fire({
+                title: "Cash on Delivery Selected",
+                text: "Your order has been placed successfully!",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                completeOrder("COD");
+            });
+        });
+    </script>
+</body>
+</html>

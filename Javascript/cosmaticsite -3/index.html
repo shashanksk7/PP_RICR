@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetic Shop - Natural Beauty Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes slide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(10deg); }
+            100% { transform: translateY(0px) rotateY(0deg); }
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .slide-animation { animation: slide 20s linear infinite; }
+        .fade-in { animation: fadeIn 1s ease-out forwards; }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+
+        .product-card:hover .product-image {
+            transform: rotateY(15deg) scale(1.1);
+        }
+
+        .animate-marquee {
+            animation: marquee 40s linear infinite;
+            display: flex;
+            width: max-content;
+        }
+
+        .hover-pause:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-800 to-amber-900 min-h-screen flex flex-col items-center">
+    <!-- Discount Banner -->
+    <div class="w-full bg-gradient-to-r from-amber-400 to-purple-700 py-3 overflow-hidden">
+        <div class="slide-animation whitespace-nowrap text-center">
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🎉 Flash Sale! 50% OFF 🎉</span>
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🚚 Free Shipping Over $50 🚚</span>
+        </div>
+    </div>
+
+    <!-- Fixed Navigation Bar -->
+    <header class="w-full bg-purple-900 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-amber-500 mb-4 md:mb-0 hover:scale-105 transition-transform">
+                <i class="fas fa-spa mr-2"></i>Cosmetic Shop
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <a href="index.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Home</a>
+                <a href="shop.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Shop</a>
+                <a href="about.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">About</a>
+                <a href="contact.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Contact</a>
+                <a href="cart.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center mt-8 w-full">
+        <!-- Hero Section -->
+        <h1 class="text-amber-100 text-5xl font-bold fade-in mb-4 text-center">
+            Discover Your Natural Beauty
+        </h1>
+        <p class="text-amber-100 mt-4 text-xl fade-in animation-delay-500 text-center">
+            Premium Cosmetics Crafted with Care
+        </p>
+        
+        <!-- Action Buttons -->
+        <div class="flex space-x-4 mt-8 fade-in animation-delay-1000">
+            <a href="shop.html" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-amber-600 text-white rounded-full shadow-lg hover:from-purple-700 hover:to-amber-700 transition-all transform hover:scale-105">
+                Shop Collection <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a href="track-order.html" class="px-8 py-3 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-full shadow-lg hover:from-purple-600 hover:to-purple-800 transition-all transform hover:scale-105">
+                Track Order <i class="fas fa-shipping-fast ml-2"></i>
+            </a>
+        </div>
+
+
+        <!-- Product Carousel -->
+        <div class="mt-16 w-full overflow-hidden hover-pause">
+            <div class="animate-marquee" id="productCarousel"></div>
+        </div>
+
+        <!-- Benefits Section -->
+        <section class="w-full py-16 px-4 fade-in">
+            <div class="container mx-auto grid md:grid-cols-3 gap-8">
+                <div class="bg-purple-100/10 p-6 rounded-2xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                    <i class="fas fa-leaf text-4xl text-amber-400 mb-4"></i>
+                    <h3 class="text-2xl text-amber-100 font-bold mb-2">Natural Ingredients</h3>
+                    <p class="text-amber-200">Formulated with 100% organic botanical extracts and essential oils.</p>
+                </div>
+                <div class="bg-purple-100/10 p-6 rounded-2xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                    <i class="fas fa-heart text-4xl text-amber-400 mb-4"></i>
+                    <h3 class="text-2xl text-amber-100 font-bold mb-2">Cruelty Free</h3>
+                    <p class="text-amber-200">PETA-certified vegan products never tested on animals.</p>
+                </div>
+                <div class="bg-purple-100/10 p-6 rounded-2xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                    <i class="fas fa-star text-4xl text-amber-400 mb-4"></i>
+                    <h3 class="text-2xl text-amber-100 font-bold mb-2">Premium Quality</h3>
+                    <p class="text-amber-200">Dermatologist-tested for all skin types.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skincare Routine -->
+        <section class="w-full py-16 bg-purple-900/30 fade-in">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl text-amber-100 font-bold text-center mb-8">Perfect Your Routine</h2>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-32 h-32 bg-amber-100/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-hand-sparkles text-4xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-amber-100 font-semibold">Cleanse</h3>
+                        <p class="text-amber-200 mt-2">Gentle formulas for perfect cleansing</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-32 h-32 bg-amber-100/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-tint text-4xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-amber-100 font-semibold">Tone</h3>
+                        <p class="text-amber-200 mt-2">Balance and prepare your skin</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-32 h-32 bg-amber-100/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-pump-soap text-4xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-amber-100 font-semibold">Treat</h3>
+                        <p class="text-amber-200 mt-2">Target specific skin concerns</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-32 h-32 bg-amber-100/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-cloud-sun text-4xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-amber-100 font-semibold">Protect</h3>
+                        <p class="text-amber-200 mt-2">SPF protection & moisturizing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beauty Blog -->
+        <section class="w-full py-16 fade-in">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl text-amber-100 font-bold text-center mb-8">Latest Beauty Tips</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <article class="bg-purple-100/10 rounded-xl p-6 backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                        <img src="https://picsum.photos/400/300?random=6" alt="Winter Skincare" class="w-full h-48 object-cover rounded-lg">
+                        <h3 class="text-amber-100 text-xl font-semibold mt-4">5 Winter Skincare Essentials</h3>
+                        <p class="text-amber-200 mt-2">Protect your skin during cold months with our expert guide...</p>
+                        <a href="#" class="text-amber-400 hover:underline mt-4 inline-block">Read More →</a>
+                    </article>
+                    <article class="bg-purple-100/10 rounded-xl p-6 backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                        <img src="https://picsum.photos/400/300?random=7" alt="Makeup Trends" class="w-full h-48 object-cover rounded-lg">
+                        <h3 class="text-amber-100 text-xl font-semibold mt-4">2024 Makeup Trends</h3>
+                        <p class="text-amber-200 mt-2">Discover the hottest beauty trends for this year...</p>
+                        <a href="#" class="text-amber-400 hover:underline mt-4 inline-block">Read More →</a>
+                    </article>
+                    <article class="bg-purple-100/10 rounded-xl p-6 backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                        <img src="https://picsum.photos/400/300?random=8" alt="Natural Glow" class="w-full h-48 object-cover rounded-lg">
+                        <h3 class="text-amber-100 text-xl font-semibold mt-4">Achieve Natural Glow</h3>
+                        <p class="text-amber-200 mt-2">Simple steps for radiant skin all year round...</p>
+                        <a href="#" class="text-amber-400 hover:underline mt-4 inline-block">Read More →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="w-full py-16 bg-purple-900/30 fade-in">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl text-amber-100 font-bold mb-4">Join Our Beauty Community</h2>
+                <p class="text-amber-200 mb-8">Get exclusive offers, skincare tips, and new product alerts</p>
+                <div class="max-w-md mx-auto flex gap-4">
+                    <input type="email" placeholder="Enter your email" 
+                           class="flex-1 px-4 py-3 rounded-full bg-purple-100/20 text-amber-100 placeholder-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    <button class="px-6 py-3 bg-gradient-to-r from-amber-500 to-purple-600 text-white rounded-full hover:from-amber-600 hover:to-purple-700 transition-all">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="w-full bg-purple-900 shadow-md mt-8">
+            <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-amber-100 mb-4 md:mb-0">
+                    © 2023 Cosmetic Shop. All rights reserved.
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-amber-100 hover:text-amber-400 transition-colors">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Fetch product data
+        fetch('./cosmatic.json')
+            .then(response => response.json())
+            .then(products => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                const carousel = document.getElementById('productCarousel');
+
+                function createProductCard(product) {
+                    const card = document.createElement('div');
+                    card.className = `product-card float-animation flex-shrink-0 w-64 h-64 bg-purple-100/20 rounded-2xl p-4 backdrop-blur-lg fade-in mx-4`;
+                    card.innerHTML = `
+                        <div class="product-image w-full h-48 transition-transform duration-300">
+                            <img src="${product.image_link}" alt="${product.name}" 
+                                class="w-full h-full object-contain rounded-lg"
+                                loading="lazy">
+                        </div>
+                        <div class="mt-2 text-center">
+                            <h3 class="text-amber-100 font-semibold text-lg truncate">${product.name}</h3>
+                            <p class="text-amber-200 mt-1">$${product.price}</p>
+                            ${product.rating ? `
+                            <div class="text-amber-400 mt-1 text-sm">
+                                ${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5 - Math.round(product.rating))}
+                                (${product.rating}/5)
+                            </div>` : ''}
+                            <button class="mt-2 px-4 py-2 bg-amber-500 text-purple-900 rounded-full hover:bg-amber-600 transition-colors"
+                                    data-id="${product.id}">
+                                Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                            </button>
+                        </div>
+                    `;
+                    return card;
+                }
+
+                function initializeCarousel() {
+                    carousel.innerHTML = '';
+                    const duplicatedProducts = [...products, ...products];
+                    
+                    duplicatedProducts.forEach(product => {
+                        const card = createProductCard(product);
+                        carousel.appendChild(card);
+                        observer.observe(card);
+                    });
+
+                    carousel.style.animationDuration = `${products.length * 6}s`;
+                }
+
+                // Initialize carousel
+                initializeCarousel();
+
+                // Add to cart functionality
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('button[data-id]')) {
+                        const productId = e.target.closest('button').dataset.id;
+                        const product = products.find(p => p.id == productId);
+                        console.log('Added to cart:', product);
+                        // Add cart logic here
+                    }
+                });
+
+                // Observe fade-in elements
+                document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            })
+            .catch(error => console.error('Error loading products:', error));
+    </script>
+</body>
+</html>

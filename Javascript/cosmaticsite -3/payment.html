@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetic Shop - Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
+</head>
+<body class="bg-gradient-to-r from-pink-400 to-purple-600 min-h-screen flex flex-col items-center">
+    <header class="w-full bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-pink-600">Cosmetic Shop</div>
+            <a href="index.html" class="text-gray-700 hover:text-pink-600">Home</a>
+        </nav>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center mt-8 w-full">
+        <h1 class="text-white text-3xl font-bold">Complete Your Payment</h1>
+        <div class="bg-white p-6 rounded-lg shadow-lg mt-6 w-96">
+            <h2 class="text-lg font-bold mb-4">Select Payment Method</h2>
+            
+            <!-- Payment Options -->
+            <label class="flex items-center space-x-2">
+                <input type="radio" name="paymentMethod" value="card" checked>
+                <span>Credit/Debit Card</span>
+            </label>
+            <label class="flex items-center space-x-2 mt-2">
+                <input type="radio" name="paymentMethod" value="upi">
+                <span>UPI</span>
+            </label>
+            <label class="flex items-center space-x-2 mt-2">
+                <input type="radio" name="paymentMethod" value="cod">
+                <span>Cash on Delivery</span>
+            </label>
+
+            <!-- UPI Payment Section (Hidden by Default) -->
+            <div id="upiSection" class="mt-4 hidden">
+                <label class="block text-gray-700">Enter UPI ID:</label>
+                <input type="text" id="upiId" placeholder="example@upi" class="w-full p-2 border rounded mt-1">
+            </div>
+
+            <!-- Pay Now Button -->
+            <button id="payNowBtn" class="mt-6 px-6 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition-all w-full">
+                Pay Now
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Show/Hide UPI input field when selected
+        document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
+            radio.addEventListener("change", () => {
+                document.getElementById("upiSection").classList.toggle("hidden", radio.value !== "upi");
+            });
+        });
+
+        document.getElementById("payNowBtn").addEventListener("click", () => {
+            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (selectedMethod === "upi") {
+                const upiId = document.getElementById("upiId").value.trim();
+                if (!upiId) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Please enter a valid UPI ID",
+                        icon: "error",
+                        showConfirmButton: true
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: "Redirecting to UPI Payment...",
+                    text: `Pay ₹XXX to ${upiId}`,
+                    icon: "info",
+                    showConfirmButton: true
+                }).then(() => {
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: "Payment Successful!",
+                            text: "Your UPI payment has been completed.",
+                            icon: "success",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        completeOrder();
+                    }, 2000);
+                });
+            } 
+            else if (selectedMethod === "cod") {
+                Swal.fire({
+                    title: "Order Placed!",
+                    text: "Your order has been placed successfully. You can pay on delivery.",
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                completeOrder();
+            } 
+            else {
+                Swal.fire({
+                    title: "Payment Successful!",
+                    text: `Your payment via ${selectedMethod.toUpperCase()} was successful.`,
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                completeOrder();
+            }
+        });
+
+        function completeOrder() {
+            setTimeout(() => {
+                localStorage.removeItem("cart");
+                window.location.href = "index.html";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

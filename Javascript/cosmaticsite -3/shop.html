@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Cosmetic Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 1s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-800 to-amber-900 min-h-screen flex flex-col">
+    <!-- Discount Banner -->
+    <div class="w-full bg-gradient-to-r from-amber-400 to-purple-700 py-3 overflow-hidden">
+        <div class="slide-animation whitespace-nowrap text-center">
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🎉 Flash Sale! 50% OFF 🎉</span>
+            <span class="text-2xl font-bold text-purple-900 drop-shadow-md mx-4">🚚 Free Shipping Over $50 🚚</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-purple-900 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-amber-500 mb-4 md:mb-0 hover:scale-105 transition-transform">
+                <i class="fas fa-spa mr-2"></i>Cosmetic Shop
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <a href="index.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Home</a>
+                <a href="shop.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Shop</a>
+                <a href="about.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">About</a>
+                <a href="contact.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Contact</a>
+                <a href="cart.html" class="text-amber-100 px-3 py-1 rounded-lg hover:bg-purple-700 hover:text-amber-400 transition-all">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center pt-12 pb-24 w-full px-4 fade-in">
+        <h1 class="text-amber-100 text-5xl font-bold mb-8 text-center">Shop Premium Cosmetics</h1>
+        
+        <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+            <!-- Products loaded dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-purple-900 shadow-md mt-auto">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-amber-100 mb-4 md:mb-0 text-center md:text-left">
+                <h3 class="text-xl font-bold mb-2">Cosmetic Shop</h3>
+                <p class="text-sm">123 Beauty Street<br>Toronto, ON M1B 2N3</p>
+            </div>
+            <div class="flex space-x-6 md:space-x-8 mb-4 md:mb-0">
+                <div class="text-center">
+                    <h4 class="text-amber-100 font-bold mb-2">Connect</h4>
+                    <div class="flex space-x-4 justify-center">
+                        <a href="#" class="text-amber-100 hover:text-amber-400">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-amber-100 hover:text-amber-400">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-amber-100 hover:text-amber-400">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-purple-800 mt-4 pt-4">
+            <p class="text-amber-100 text-sm text-center">
+                © 2023 Cosmetic Shop. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("cosmatic.json");
+            const products = await response.json();
+            const container = document.getElementById("productsContainer");
+
+            container.innerHTML = products.map(product => `
+                <div class="bg-purple-100/20 p-6 rounded-2xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                    <img src="${product.image_link}" alt="${product.name}" 
+                        class="w-full h-64 object-contain rounded-lg"
+                        loading="lazy">
+                    <div class="mt-4">
+                        <h2 class="text-amber-100 text-xl font-bold">${product.name}</h2>
+                        <p class="text-amber-200 mt-2">${product.brand}</p>
+                        <p class="text-amber-400 font-bold text-lg mt-2">$${product.price}</p>
+                        ${product.rating ? `
+                        <div class="text-amber-400 mt-2 text-sm">
+                            ${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5 - Math.round(product.rating))}
+                        </div>` : ''}
+                        <button class="add-to-cart mt-4 w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 text-white rounded-lg 
+                            hover:from-purple-700 hover:to-amber-700 transition-all"
+                            data-id="${product.id}" 
+                            data-name="${product.name}" 
+                            data-price="${product.price}" 
+                            data-image="${product.image_link}">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", (event) => {
+                    const item = {
+                        id: event.target.dataset.id,
+                        name: event.target.dataset.name,
+                        price: parseFloat(event.target.dataset.price),
+                        image: event.target.dataset.image,
+                        quantity: 1
+                    };
+                    addToCart(item);
+                });
+            });
+        });
+
+        function addToCart(item) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingItem = cart.find(p => p.id === item.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(item);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            
+            Swal.fire({
+                title: "Added to Cart!",
+                text: "${item.name} has been added to your cart",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#1f2937',
+                iconColor: '#f59e0b'
+            });
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
